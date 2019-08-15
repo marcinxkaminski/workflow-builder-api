@@ -1,0 +1,22 @@
+dist: xenial
+language: python
+python:
+  - "3.7"
+  - "3.7-dev"
+  - "3.8-dev"
+  - "nightly"
+install:
+  - pip install -r requirements.txt
+script:
+  - pytest
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $github_token
+  local_dir: build
+  on:
+    branch: master
+after_success:
+  - snyk monitor
+after_deploy:
+  - snyk monitor
