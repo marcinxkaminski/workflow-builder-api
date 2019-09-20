@@ -1,12 +1,20 @@
-TMP_PATH = '/tmp'
+_TMP_PATH = '/tmp'
 
 CLEANER = {
-    'path': TMP_PATH,
-    'age': 1800,  # seconds
-    'interval': 300  # seconds
+    'AGE': 1800,  # seconds
+    'INTERVAL': 300,  # seconds
+    'PATH': _TMP_PATH
 }
 
 BUILDER = {
-    'path': '/data',
-    'dest_path': TMP_PATH
+    'PATH': '/data',
+    'DEST_PATH': _TMP_PATH
+}
+
+API = {
+    'NAME': 'Machine Learning Workflow Builder',
+    'ALLOWED_METHODS': ['GET', 'POST'],
+    'ENDPOINTS': {
+        'WORKFLOW_BUILDER': '/workflow-builder'
+    }
 }

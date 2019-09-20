@@ -15,9 +15,9 @@
 
 * Compiles for development
     ```
-    python app.py
+    python api.py
     ```
-    
+
 
 ### Styles
 * [Commits Style](https://gitmoji.carloscuesta.me/)
