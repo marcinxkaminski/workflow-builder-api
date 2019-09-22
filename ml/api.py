@@ -1,18 +1,36 @@
-from ml.config import CLEANER, API
-from ml.utils.logger import get_logger
-from aiohttp.web import Application, run_app
-from ml.interfaces.workflow_builder_interface import WorkflowBuilderInterface
-from ml.utils.files import del_old_files_in_dir_periodic as run_cleaner
+from fastapi import APIRouter
+from pydantic import BaseModel
+from config import BUILDER
+from workflow_builder import WorkflowBuilder
 
-logger = get_logger(__name__)
 
-app = Application()
+class WorkflowElements(BaseModel):
+    elements: list = []
 
-workflow_builder_api = WorkflowBuilderInterface(API.get('ENDPOINTS', {}).get('WORKFLOW_BUILDER', '/'))
-workflow_builder_api.register(router=app.router)
 
-logger.info('Starting cleaner ...')
-run_cleaner(interval=CLEANER.get('INTERVAL'), path=CLEANER.get('PATH'), age=CLEANER.get('AGE'))
+router = APIRouter()
+wf_builder = WorkflowBuilder(BUILDER)
 
-logger.info('Starting api ...')
-run_app(app, access_log=logger)
+
+@router.get(
+    path='/',
+    response_description='List of workflow elements available to select.',
+    response_model=WorkflowElements,
+    status_code=200
+)
+async def get_available_workflow_elements():
+    """
+    Get available workflow elements which you could use to build a workflow:
+    **returns**: array with workflow's elements names
+    """
+    return wf_builder.get_available_workflow_elements()
+
+
+@router.post('/')
+async def build_workflow(selected_workflow_elements: WorkflowElements):
+    """
+    Creates workflow from selected workflow elements.
+    **selected_workflow_elements**: array of selected workflow elements' names
+    **returns**: url to complete workflow file
+    """
+    return await wf_builder.build_workflow(selected_workflow_elements.elements)

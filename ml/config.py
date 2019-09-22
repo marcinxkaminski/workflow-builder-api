@@ -12,9 +12,10 @@ BUILDER = {
 }
 
 API = {
-    'NAME': 'Machine Learning Workflow Builder',
-    'ALLOWED_METHODS': ['GET', 'POST'],
+    'TITLE': 'ML Workflow Builder',
+    'DESCRIPTION': 'This app is Machine Learning Workflow Builder. It allows you to create machine learning workflow by selecting the blocks in specified order, then you will get url to complete workflow file you could execute.',
+    'BASE_PATH': '/api/workflow-builder{}',
     'ENDPOINTS': {
-        'WORKFLOW_BUILDER': '/workflow-builder'
+        'ELEMENTS': '/elements'
     }
 }

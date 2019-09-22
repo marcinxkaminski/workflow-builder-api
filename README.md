@@ -15,7 +15,7 @@
 
 * Compiles for development
     ```
-    python api.py
+    uvicorn main:app --reload --log-level debug
     ```
 
 

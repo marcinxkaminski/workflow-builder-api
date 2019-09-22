@@ -1,4 +1,4 @@
-from threading import Timer, start_new_thread
+from threading import Timer, Thread
 from functools import partial
 from os import remove, path, stat, walk
 from platform import system
@@ -37,9 +37,9 @@ def del_old_files_in_dir(path: str, age: int = 0):
         for fp in fps:
             crt_time = get_file_creation_date(fp)
             if time() - crt_time > age:
-                start_new_thread(remove, fp)
+                Thread(target=remove, args=[fp]).start()
 
-    start_new_thread(_del_old_files_in_dir, path, age)
+    Thread(target=_del_old_files_in_dir, args=[path, age]).start()
 
 
 def del_old_files_in_dir_periodic(

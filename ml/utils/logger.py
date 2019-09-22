@@ -5,5 +5,5 @@ logging.basicConfig(
 )
 
 
-def get_logger(name: str = __name__):
+def get_logger(name: str):
     return logging.getLogger(name)
