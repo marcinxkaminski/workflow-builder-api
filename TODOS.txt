@@ -1,7 +1,5 @@
 TODO: Add tests
 TODO: Add middlewares (CORS, Timeout, Error etc.)
-TODO: Add comments, Sphinx and Swagger
-TODO: Configure Tox
 TODO: Configure Travis
 TODO: Prepare files (workflow elements) from data folder
 TODO: Implement not implemented functions (e.g. merge_elements_to_file function)
