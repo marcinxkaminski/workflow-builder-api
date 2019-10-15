@@ -9,7 +9,7 @@ class WorkflowElements(BaseModel):
 
 
 router = APIRouter()
-wf_builder = WorkflowBuilder(BUILDER)
+wfb = WorkflowBuilder(BUILDER)
 
 
 @router.get(
@@ -23,7 +23,7 @@ async def get_available_workflow_elements():
     Get available workflow elements which you could use to build a workflow:
     **returns**: array with workflow's elements names
     """
-    return wf_builder.get_available_workflow_elements()
+    return wfb.get_available_workflow_elements()
 
 
 @router.post('/')
@@ -33,4 +33,4 @@ async def build_workflow(selected_workflow_elements: WorkflowElements):
     **selected_workflow_elements**: array of selected workflow elements' names
     **returns**: url to complete workflow file
     """
-    return await wf_builder.build_workflow(selected_workflow_elements.elements)
+    return await wfb.build_workflow(selected_workflow_elements.elements)
