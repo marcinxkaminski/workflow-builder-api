@@ -19,4 +19,4 @@ app.include_router(
 
 if __name__ == "__main__":
     logger.debug('Starting app ...')
-    run_app(app, host="0.0.0.0", port=8000)
+    run_app(app, host='0.0.0.0', port=8000)

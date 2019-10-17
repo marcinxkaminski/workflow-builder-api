@@ -1,4 +1,4 @@
-_TMP_PATH = '/tmp'
+_TMP_PATH = './tmp'
 
 CLEANER = {
     'AGE': 1800,  # seconds
