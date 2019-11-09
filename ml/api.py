@@ -22,7 +22,7 @@ class Workflow(BaseModel):
 
 
 router = APIRouter()
-wf_builder = WorkflowBuilder(BUILDER)
+wfb = WorkflowBuilder(BUILDER)
 
 
 @router.get(

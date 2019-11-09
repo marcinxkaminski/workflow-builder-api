@@ -3,17 +3,28 @@ from functools import partial
 from os import remove, path, stat, walk
 from platform import system
 from time import time
+import zipfile as zf
 
 
-def get_file_name(fp: str) -> str:
-    return path.splitext(fp)
+def create_file(filename: str, content: str):
+    # TODO: implement
+    return
 
 
-def get_file_creation_date(fp: str) -> str:
+def zip_files(filenames: list):
+    # TODO: implement
+    return
+
+
+def get_file_name(filepath: str) -> str:
+    return path.splitext(filepath)
+
+
+def get_file_creation_date(filepath: str) -> str:
     if system() == 'Windows':
-        return path.getctime(fp)
+        return path.getctime(filepath)
     else:
-        meta = stat(fp)
+        meta = stat(filepath)
         try:
             return meta.st_birthtime
         except AttributeError:
@@ -21,23 +32,23 @@ def get_file_creation_date(fp: str) -> str:
 
 
 def get_all_files_in_dir(dir: str) -> list:
-    fps = []
+    filepaths = []
 
     for pack in walk(dir):
         for f in pack[2]:
-            fps.append(f)
+            filepaths.append(f)
 
-    return fps
+    return filepaths
 
 
 def del_old_files_in_dir(path: str, age: int = 0):
     def _del_old_files_in_dir(path: str, age: int = 0):
-        fps = get_all_files_in_dir()
+        filepaths = get_all_files_in_dir()
 
-        for fp in fps:
-            crt_time = get_file_creation_date(fp)
+        for filepath in filepaths:
+            crt_time = get_file_creation_date(filepath)
             if time() - crt_time > age:
-                Thread(target=remove, args=[fp]).start()
+                Thread(target=remove, args=[filepath]).start()
 
     Thread(target=_del_old_files_in_dir, args=[path, age]).start()
 
