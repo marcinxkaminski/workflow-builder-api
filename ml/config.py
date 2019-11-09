@@ -1,4 +1,10 @@
-_TMP_PATH = '/tmp'
+from os import environ
+
+_TMP_PATH = './tmp'
+
+LOGGER = {
+    'PATH': './logs'
+}
 
 CLEANER = {
     'AGE': 1800,  # seconds
@@ -7,15 +13,18 @@ CLEANER = {
 }
 
 BUILDER = {
-    'PATH': '/data',
+    'PATH': './components',
     'DEST_PATH': _TMP_PATH
 }
 
 API = {
-    'TITLE': 'ML Workflow Builder',
-    'DESCRIPTION': 'This app is Machine Learning Workflow Builder. It allows you to create machine learning workflow by selecting the blocks in specified order, then you will get url to complete workflow file you could execute.',
+    'HOST': environ.get('HOST', '0.0.0.0'),
+    'PORT': environ.get('PORT', '0.0.0.0'),
+    'TITLE': 'Workflow Builder',
+    'DESCRIPTION': 'This app is Workflow Builder. It allows you to create any workflow by selecting the blocks in specified order, then you will get url to complete workflow file you could execute.',
     'BASE_PATH': '/api/workflow-builder{}',
     'ENDPOINTS': {
-        'ELEMENTS': '/elements'
+        'ELEMENTS': '/elements',
+        'FILES': '/files'
     }
 }
