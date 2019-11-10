@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 import workflow_builder as wb
 import workflow_elements as we
+from starlette.responses import FileResponse
 
 
 class WorkflowElements(BaseModel):
@@ -9,12 +10,12 @@ class WorkflowElements(BaseModel):
 
 
 class OnlineProcessingRequest(BaseModel):
-    id: str = ''
-    data: dict = {}
+    id: str = 'element_id'
+    data: dict = {'data': 'any data to process'}
 
 
 class BuildWorkflowResponse(BaseModel):
-    url: str = 'url_to_file'
+    id: str = 'workflow_id'
 
 
 router = APIRouter()
@@ -62,4 +63,5 @@ async def build_workflow(req: WorkflowElements) -> BuildWorkflowResponse:
     **selected_workflow_elements**: array of selected workflow elements' names
     **returns**: url to complete workflow file
     """
-    return await wb.build_workflow(selected_elements=req.elements)
+    id = await wb.build_workflow(selected_elements=req.elements)
+    return {'id': id}

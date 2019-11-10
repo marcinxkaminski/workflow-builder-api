@@ -3,7 +3,12 @@ from os import environ
 _TMP_PATH = './tmp'
 
 LOGGER = {
+    'SAVE_TO_FILE': True,
     'PATH': './logs'
+}
+
+CDN = {
+    'PATH': _TMP_PATH
 }
 
 CLEANER = {
@@ -13,22 +18,25 @@ CLEANER = {
 }
 
 BUILDER = {
-    'PATH': './components',
+    'PATH': 'components',
     'DEST_PATH': _TMP_PATH,
-    'TEMPLATE_FILE': './templates/workflow_main.py',
-    'IMPORTS_COMMENT': '# IMPORTS',
-    'MAIN_COMMENT': '# MAIN'
+    'TEMPLATE_FILE': 'templates/workflow_main.py',
+    'IMPORTS_COMMENT': 'IMPORTS',
+    'MAIN_COMMENT': 'MAIN'
 }
 
 API = {
     'HOST': environ.get('HOST', '0.0.0.0'),
-    'PORT': environ.get('PORT', '8080'),
+    'PORT': environ.get('PORT', '8000'),
     'TITLE': 'Workflow Builder',
     'DESCRIPTION': 'This app is Workflow Builder. It allows you to create any workflow by selecting the blocks in specified order, then you will get url to complete workflow file you could execute.',
     'BASE_PATH': '/api/workflow-builder{}',
     'ENDPOINTS': {
-        'ELEMENTS': '/elements'
+        'ELEMENTS': '/elements',
+        'CDN': '/files'
     },
-    'ORIGINS': ['http://localhost:8080', 'https://localhost:8080', 'http:localhost', 'http:localhost:8080' 'https://xkamson.github.io/workflow-builder-web/'],
-    'METHODS': ['GET', 'PUT', 'POST'],
+    'ORIGINS': ['*'],
+    'METHODS': ['*'],
+    'HEADERS': ['*'],
+    'ALLOW_CREDENTIALS': False
 }

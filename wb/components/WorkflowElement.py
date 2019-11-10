@@ -33,11 +33,12 @@ class WorkflowElement():
         **classname**: class name of the workflow element
         :config: config**: info required by the workflow element. Could contain "data" property for the "fast" method.
         """
-        self.id = uuid4()
+        self.id = str(uuid4())
         self.name = name
         self.description = description
         self.materialIcon = materialIcon
         self.optional = optional
+        self.requirements = requirements
         self.filename = filename
         self.classname = classname
         self.config = config
