@@ -1,13 +1,11 @@
 from os import listdir
 from json import loads
 from argparse import ArgumentParser
-# DO NOT REMOVE THIS COMMENTS!
-# IMPORTS
+# IMPORTS - DO NOT REMOVE THIS COMMENT!
 
 
 def main(input: str, output: str, delimiter: str, kwargs: dict):
-    # DO NOT REMOVE THIS COMMENTS!
-    # MAIN
+    # MAIN - DO NOT REMOVE THIS COMMENT!
     return
 
 

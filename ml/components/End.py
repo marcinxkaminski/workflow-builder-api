@@ -5,6 +5,7 @@ from re import match
 from termcolor import colored
 
 FILE = 'End.py'
+CLASSNAME = 'End'
 OPTIONAL = True
 NAME = 'END'
 DESCRIPTION = 'Validates filepaths and prints end message'

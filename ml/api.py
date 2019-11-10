@@ -9,7 +9,7 @@ class WorkflowElements(BaseModel):
 
 
 class OnlineProcessingRequest(BaseModel):
-    name: str = ''
+    id: str = ''
     data: dict = {}
 
 
@@ -17,12 +17,11 @@ class OnlineProcessingResponse(BaseModel):
     data: dict = {}
 
 
-class Workflow(BaseModel):
+class BuildWorkflowResponse(BaseModel):
     url: str = 'url_to_file'
 
 
 router = APIRouter()
-wfb = WorkflowBuilder(BUILDER)
 
 
 @router.get(
@@ -31,7 +30,7 @@ wfb = WorkflowBuilder(BUILDER)
     response_model=WorkflowElements,
     status_code=200
 )
-async def get_available_workflow_elements():
+async def get_available_workflow_elements() -> WorkflowElements:
     """
     Get available workflow elements which you could use to build a workflow:
     **returns**: array with workflow's elements names
@@ -39,19 +38,19 @@ async def get_available_workflow_elements():
     return await we.get_available_workflow_elements()
 
 
-@router.get(
+@router.put(
     path='/',
     response_description='Result of the online processing of the data.',
     response_model=OnlineProcessingResponse,
     status_code=200
 )
-async def process_online(req: OnlineProcessingRequest):
+async def process_online(req: OnlineProcessingRequest) -> OnlineProcessingResponse:
     """
-    Get available workflow elements which you could use to build a workflow:
-    **returns**: array with workflow's elements names
+    Processes the data online
+    **returns**: dict with online process result
     """
     return await we.process_online(
-        name=req.name,
+        id=req.id,
         data=req.data
     )
 
@@ -59,10 +58,10 @@ async def process_online(req: OnlineProcessingRequest):
 @router.post(
     path='/',
     response_description='URL to the workflow created from selected elements.',
-    response_model=Workflow,
+    response_model=BuildWorkflowResponse,
     status_code=200
 )
-async def build_workflow(req: WorkflowElements):
+async def build_workflow(req: WorkflowElements) -> BuildWorkflowResponse:
     """
     Creates workflow from selected workflow elements.
     **selected_workflow_elements**: array of selected workflow elements' names

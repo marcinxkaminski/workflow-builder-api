@@ -1,6 +1,8 @@
 from abc import abstractmethod
 from uuid import uuid4
 
+FILE = 'EmptyWorkflowElement.py'
+CLASSNAME = 'WorkflowElement'
 OPTIONAL = False
 
 
@@ -21,7 +23,7 @@ class WorkflowElement():
         self.config = config
 
     @abstractmethod
-    def main(self, input: str = None, output: str = None, delimiter=','):
+    def main(self, input: str = None, output: str = None, delimiter=',', **kwargs):
         """
         Main method for this Workflow Element.
         It should handle all needed operation on the input file and it's data and save it to output file.

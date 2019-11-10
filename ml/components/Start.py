@@ -5,6 +5,7 @@ from re import match
 from termcolor import colored
 
 FILE = 'Start.py'
+CLASSNAME = 'Start'
 OPTIONAL = True
 NAME = 'START'
 DESCRIPTION = 'Validates filepaths and prints start message'

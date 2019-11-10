@@ -2,6 +2,7 @@ from ml.components.WorkflowElement import WorkflowElement
 import csv
 
 FILE = 'Normalize.py'
+CLASSNAME = 'Normalize'
 OPTIONAL = True
 NAME = 'NORMALIZE'
 DESCRIPTION = 'Normalizes data'
