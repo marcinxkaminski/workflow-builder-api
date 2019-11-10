@@ -15,7 +15,7 @@ CLEANER = {
 BUILDER = {
     'PATH': './components',
     'DEST_PATH': _TMP_PATH,
-    'TEMPLATE_FILE': './templates/workflow_main.py'
+    'TEMPLATE_FILE': './templates/workflow_main.py',
     'IMPORTS_COMMENT': '# IMPORTS',
     'MAIN_COMMENT': '# MAIN'
 }

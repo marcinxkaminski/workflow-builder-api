@@ -1,9 +1,12 @@
-from wb.components import __all__ as WORKFLOW_ELEMENTS
+from components.WorkflowElement import WorkflowElement
+from components.End import End
+from components.Start import Start
+from components.Normalize import Normalize
 
-workflow_elements = {e.id: e for e in (Element[Element.CLASSNAME]() for Element in WORKFLOW_ELEMENTS)}
+WORKFLOW_ELEMENTS = {e.id: e for e in (WorkflowElement(), End(), Start(), Normalize())}
 
 
-async def get_available_workflow_elements(self) -> dict:
+async def get_available_workflow_elements() -> list:
     """
     Get availble worfklow's elements.
     :returns: list of avaible workflow elements' names
@@ -14,16 +17,16 @@ async def get_available_workflow_elements(self) -> dict:
         'config': e.config,
         'description': e.description,
         'materialIcon': e.materialIcon
-    } for e in workflow_elements.values() if e.optional]
+    } for e in WORKFLOW_ELEMENTS.values() if e.optional]
 
 
-async def process_online(self, id: str, data: dict) -> dict:
+async def process_online(id: str, data: dict):
     """
     Handles simple online processing of the data
     **workflow_element_name**: workflow element's name that should be used
     **data**: data to process
     **returns**: dict with result of the data processing
     """
-    if (id in workflow_elements and
-            hasattr('quick_main', workflow_elements[id])):
-        return workflow_elements[id].quick_main(data=data)
+    if (id in WORKFLOW_ELEMENTS and
+            hasattr('quick_main', WORKFLOW_ELEMENTS[id])):
+        return WORKFLOW_ELEMENTS[id].quick_main(data=data)

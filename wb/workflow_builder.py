@@ -1,10 +1,8 @@
-from wb.components import __all__ as WORKFLOW_ELEMENTS
+from workflow_elements import WORKFLOW_ELEMENTS
 from config import BUILDER, API
 from zipfile import ZipFile
 from uuid import uuid4
 from aiofiles import open as aioopen
-
-workflow_elements = {e.NAME: e for e in WORKFLOW_ELEMENTS}
 
 
 async def _zip_files(filepath: str, files: list) -> str:
@@ -25,13 +23,13 @@ async def _get_main_function_call(classname: str):
 
 
 async def _get_file_components(wf_elems: list):
-    files = []
+    files = [e.file for e in WORKFLOW_ELEMENTS if not e.optional]
     imports = []
     calls = []
     requirements = []
 
     for elem in wf_elems:
-        e = workflow_elements.get(elem.name, {})
+        e = WORKFLOW_ELEMENTS.get(elem.id, {})
         if not e.FILE or not e.CLASSNAME:
             raise ValueError('Selected element is invalid')
 

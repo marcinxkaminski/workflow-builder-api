@@ -6,20 +6,6 @@ from time import time
 import zipfile as zf
 
 
-def create_file(filename: str, content: str):
-    # TODO: implement
-    return
-
-
-def zip_files(filenames: list):
-    # TODO: implement
-    return
-
-
-def get_file_name(filepath: str) -> str:
-    return path.splitext(filepath)
-
-
 def get_file_creation_date(filepath: str) -> str:
     if system() == 'Windows':
         return path.getctime(filepath)

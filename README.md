@@ -15,9 +15,12 @@
 
 * Compiles for development
     ```
-    uvicorn server:app --reload --log-level debug --log-config logs/uvicorn.txt
+    uvicorn server --reload --log-level debug --log-config logs/uvicorn.txt
     ```
 
+### API Documentation
+Available at:
+or if you're running development: http://localhost:8000/docs
 
 ### Styles
 * [Commits Style](https://gitmoji.carloscuesta.me/)

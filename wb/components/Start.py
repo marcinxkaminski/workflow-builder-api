@@ -1,4 +1,7 @@
-from wb.components.WorkflowElement import WorkflowElement
+try:
+    from WorkflowElement import WorkflowElement
+except ModuleNotFoundError:
+    from components.WorkflowElement import WorkflowElement
 
 from os.path import isfile
 from re import match
@@ -23,6 +26,8 @@ class Start(WorkflowElement):
             materialIcon=MATERIAL_ICON,
             optional=OPTIONAL,
             requirements=REQUIREMENTS,
+            filename=FILE,
+            classname=CLASSNAME,
             config={
                 'data': {
                     'input': 'your_data_input',
@@ -64,21 +69,17 @@ class Start(WorkflowElement):
             )
         )
 
-    def quick_main(self, data: dict) -> dict:
+    def quick_main(self, data: dict) -> str:
         """
         Validates filepaths and returns exemplary start message.
         **data**: data for fast processing, defined in the config of the workflow element
         **returns**: dict with result in it
         """
-        result = {'data': ''}
-
         in_fp = data.get('input', '')
         out_fp = data.get('output', '')
 
         if not (self._is_filepath_valid(filepath=in_fp) and
                 self._is_filepath_valid(filepath=out_fp)):
-            result['data'] = 'Files paths\' must be valid'
-        else:
-            result['data'] = self._create_message(input=in_fp, output=out_fp)
+            return 'Files paths\' must be valid'
 
-        return result
+        return self._create_message(input=in_fp, output=out_fp)

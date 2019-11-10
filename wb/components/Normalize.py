@@ -1,4 +1,8 @@
-from wb.components.WorkflowElement import WorkflowElement
+try:
+    from WorkflowElement import WorkflowElement
+except ModuleNotFoundError:
+    from components.WorkflowElement import WorkflowElement
+
 import csv
 
 FILE = 'Normalize.py'
@@ -18,6 +22,8 @@ class Normalize(WorkflowElement):
             materialIcon=MATERIAL_ICON,
             optional=OPTIONAL,
             requirements=REQUIREMENTS,
+            filename=FILE,
+            classname=CLASSNAME,
             config={
                 'data': {
                     'values': [],
@@ -74,15 +80,12 @@ class Normalize(WorkflowElement):
             )
         )
 
-    def quick_main(self, data: dict) -> dict:
+    def quick_main(self, data: dict) -> list:
         """
         Normalizes data from input arra/list and returns it
         **data**: data for fast processing, defined in the config of the workflow element
         **returns**: dict with result in it
         """
-        result = {'data': ''}
         arr = data.get('values', '')
 
-        result['data'] = self._normalize(arr)
-
-        return result
+        return self._normalize(arr)

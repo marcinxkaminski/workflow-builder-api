@@ -1,25 +1,45 @@
 from abc import abstractmethod
 from uuid import uuid4
 
-FILE = 'EmptyWorkflowElement.py'
+FILE = 'WorkflowElement.py'
 CLASSNAME = 'WorkflowElement'
 OPTIONAL = False
+NAME = 'WORKFLOW_ELEMENT'
+DESCRIPTION = 'Empty, exemplary workflow element'
+MATERIAL_ICON = ''
+REQUIREMENTS = []
 
 
 class WorkflowElement():
-    def __init__(self, name, description='', materialIcon='', optional=True, requirements=[], config={}):
+    def __init__(
+            self,
+            name=NAME,
+            description=DESCRIPTION,
+            materialIcon=MATERIAL_ICON,
+            optional=OPTIONAL,
+            requirements=REQUIREMENTS,
+            filename=FILE,
+            classname=CLASSNAME,
+            config={}):
         """
         Initializes Workflow Element.
-        It assings id to the element and allows to set it's name, description, icon and config.
+        It assings id to the element and allows to set it's name, description, icon, config etc.
         **name**: name of the workflow element
         **description**: description of the workflow element
         **materialIcon**: icon which could describe this workflow element
+        **optional**: if the workflow element is optional or mandatory and should always be added
+        **requirements**: requirements used in the workflow element (avoid repeating the same requirements in modules)
+        **filename**: name of the file where this element is placed
+        **classname**: class name of the workflow element
         :config: config**: info required by the workflow element. Could contain "data" property for the "fast" method.
         """
         self.id = uuid4()
         self.name = name
         self.description = description
         self.materialIcon = materialIcon
+        self.optional = optional
+        self.filename = filename
+        self.classname = classname
         self.config = config
 
     @abstractmethod
