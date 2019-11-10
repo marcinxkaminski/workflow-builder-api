@@ -1,6 +1,6 @@
 from logging import basicConfig, getLogger, Logger, FileHandler, StreamHandler, INFO
 from datetime import date
-from ml.config import LOGGER
+from wb.config import LOGGER
 
 basicConfig(
     level=INFO,

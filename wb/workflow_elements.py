@@ -1,4 +1,4 @@
-from ml.components import __all__ as WORKFLOW_ELEMENTS
+from wb.components import __all__ as WORKFLOW_ELEMENTS
 
 workflow_elements = {e.id: e for e in (Element[Element.CLASSNAME]() for Element in WORKFLOW_ELEMENTS)}
 

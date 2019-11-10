@@ -29,6 +29,6 @@ API = {
     'ENDPOINTS': {
         'ELEMENTS': '/elements'
     },
-    'ORIGINS': ['http://localhost:8080', 'https://localhost:8080', 'https://xkamson.github.io/ml-web/'],
+    'ORIGINS': ['http://localhost:8080', 'https://localhost:8080', 'http:localhost', 'http:localhost:8080' 'https://xkamson.github.io/workflow-builder-web/'],
     'METHODS': ['GET', 'PUT', 'POST'],
 }

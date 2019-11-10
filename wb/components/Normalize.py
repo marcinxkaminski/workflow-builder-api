@@ -1,4 +1,4 @@
-from ml.components.WorkflowElement import WorkflowElement
+from wb.components.WorkflowElement import WorkflowElement
 import csv
 
 FILE = 'Normalize.py'

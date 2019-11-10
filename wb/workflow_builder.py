@@ -1,4 +1,4 @@
-from ml.components import __all__ as WORKFLOW_ELEMENTS
+from wb.components import __all__ as WORKFLOW_ELEMENTS
 from config import BUILDER, API
 from zipfile import ZipFile
 from uuid import uuid4
