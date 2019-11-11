@@ -1,11 +1,13 @@
 from logging import basicConfig, getLogger, Logger, FileHandler, StreamHandler, INFO
 from datetime import date
 from config import LOGGER
+from os import path
 
 HANDLERS = [StreamHandler()]
 
 if (LOGGER.get('SAVE_TO_FILE', False)):
-    HANDLERS.append(FileHandler("{}/{}.log".format(LOGGER.get('PATH', '.'), date.today())))
+    filename = f'{date.today()}.log'
+    HANDLERS.append(FileHandler(path.join(LOGGER.get('PATH', '.'), filename)))
 
 basicConfig(
     level=INFO,

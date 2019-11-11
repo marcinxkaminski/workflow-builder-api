@@ -28,5 +28,5 @@ async def process_online(id: str, data: dict):
     **returns**: dict with result of the data processing
     """
     if (id in WORKFLOW_ELEMENTS and
-            hasattr('quick_main', WORKFLOW_ELEMENTS[id])):
+            hasattr(WORKFLOW_ELEMENTS[id], 'quick_main')):
         return WORKFLOW_ELEMENTS[id].quick_main(data=data)

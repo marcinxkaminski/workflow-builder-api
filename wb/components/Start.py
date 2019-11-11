@@ -15,7 +15,7 @@ DESCRIPTION = 'Validates filepaths and prints start message'
 MATERIAL_ICON = 'play_arrow'
 REQUIREMENTS = ['termcolor==1.1.0']
 
-_MESSAGE = 'WELCOME \n STARTING RUNNING YOUR WORKFLOW \n Data Input: {} \n Results Output: {} \n'
+_MESSAGE = 'WELCOME \n STARTING RUNNING YOUR WORKFLOW \n Data Input: {} \n Results Output: {}\n'
 
 
 class Start(WorkflowElement):

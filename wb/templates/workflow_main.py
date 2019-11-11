@@ -40,7 +40,7 @@ if __name__ == "__main__":
         default=','
     )
 
-    parser.add(
+    parser.add_argument(
         '-k', '--kwargs',
         help="Any other arguments that could be used by any of the Workflow Elements. Should be JSON dumped to string.",
         type=str,

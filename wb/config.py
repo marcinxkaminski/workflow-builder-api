@@ -1,6 +1,6 @@
 from os import environ
 
-_TMP_PATH = './tmp'
+_TMP_PATH = 'tmp'
 
 LOGGER = {
     'SAVE_TO_FILE': True,
@@ -22,7 +22,9 @@ BUILDER = {
     'DEST_PATH': _TMP_PATH,
     'TEMPLATE_FILE': 'templates/workflow_main.py',
     'IMPORTS_COMMENT': 'IMPORTS',
-    'MAIN_COMMENT': 'MAIN'
+    'MAIN_COMMENT': 'MAIN',
+    'MAIN_FILE_NAME': 'main.py',
+    'REQUIREMENTS_FILE_NAME': 'requirements.txt'
 }
 
 API = {

@@ -3,84 +3,108 @@ from config import BUILDER
 from zipfile import ZipFile
 from uuid import uuid4
 from aiofiles import open as aioopen
+from os import mkdir, path, listdir
+from shutil import copy2, rmtree
 
 
-async def _zip_files(filepath: str, files: list) -> str:
-    zip_file_path = '{}.zip'.format(filepath)
-    zip = ZipFile(zip_file_path, 'w')
-    for file in files:
-        zip.write(file)
-    zip.close()
-    return zip_file_path
+async def _create_workflow_directory(id: str) -> str:
+    workflow_dir_path = path.join(BUILDER.get('DEST_PATH', '.'), id)
+
+    if not path.exists(workflow_dir_path):
+        mkdir(workflow_dir_path)
+
+    return workflow_dir_path
 
 
-async def _get_import(filename: str, classname: str):
-    return 'from {} import {}'.format(filename.split('.')[0], classname)
+async def _get_import_line(filename: str, classname: str):
+    module = filename.split('.')[0]
+    return f'from {module} import {classname}'
 
 
-async def _get_main_function_call(classname: str):
-    return '    {}().main(input=input, output=output, delimiter=delimiter, **kwargs)'.format(classname)
+async def _get_main_function_call_line(classname: str):
+    return f'    {classname}().main(input=input, output=output, delimiter=delimiter, **kwargs)'
 
 
-async def _get_file_components(wf_elems: list):
+async def _get_workflow_components(elements: list) -> dict:
     imports = []
     calls = []
     requirements = []
-    files = ['{}/{}'.format(BUILDER.get('PATH', '.'), e.filename) for e in WORKFLOW_ELEMENTS.values() if not e.optional]
+    files = [path.join(BUILDER.get('PATH', '.'), e.filename) for e in WORKFLOW_ELEMENTS.values() if e.optional is False]
 
-    for elem in wf_elems:
-        e = WORKFLOW_ELEMENTS.get(elem.get('id'), {})
-        if not e.filename or not e.classname:
-            raise ValueError('Selected element is invalid')
-
-        files.append('{}/{}'.format(BUILDER.get('PATH', '.'), e.filename))
-        imports.append(await _get_import(filename=e.filename, classname=e.classname))
-        calls.append(await _get_main_function_call(classname=e.classname))
-        requirements += e.requirements
+    for element in elements:
+        e = WORKFLOW_ELEMENTS.get(element.get('id'), {})
+        if e and e.filename and e.classname:
+            filepath = '{}/{}'.format(BUILDER.get('PATH', '.'), e.filename)
+            files.append(filepath)
+            imports.append(await _get_import_line(filename=e.filename, classname=e.classname))
+            calls.append(await _get_main_function_call_line(classname=e.classname))
+            requirements += e.requirements
 
     return {'files': files, 'imports': imports, 'calls': calls, 'requirements': set(requirements)}
 
 
-async def _create_main_file(filepath: str, wf_elems: list):
-    main_file_path = '{}.py'.format(filepath)
-    requirements_file_path = '{}.txt'.format(filepath)
-    workflow_file_components = await _get_file_components(wf_elems=wf_elems)
+async def _copy_files_to_dir(files: list, dir_path: str):
+    for f in files:
+        copy2(f, dir_path)
+
+
+async def _create_main_file_in_workflow_dir(workflow_components: dict, dir_path: str):
+    main_file_path = path.join(dir_path, BUILDER.get('MAIN_FILE_NAME', 'main.py'))
 
     async with aioopen(main_file_path, mode='w') as nf:
         async with aioopen(BUILDER.get('TEMPLATE_FILE'), mode='r') as f:
             async for line in f:
                 if BUILDER.get('IMPORTS_COMMENT', 'IMPORT') in line:
-                    await nf.write('\n'.join(workflow_file_components.get('imports', [])))
+                    await nf.write('\n'.join(workflow_components.get('imports', [])))
                 elif BUILDER.get('MAIN_COMMENT', 'MAIN') in line:
-                    await nf.write('\n'.join(workflow_file_components.get('calls', [])))
+                    await nf.write('\n'.join(workflow_components.get('calls', [])))
                 else:
                     await nf.write(line)
 
+    workflow_components['files'].append(main_file_path)
+
+
+async def _create_requirements_file_in_workflow_dir(workflow_components: dict, dir_path: str):
+    requirements_file_path = path.join(dir_path, BUILDER.get('REQUIREMENTS_FILE_NAME', 'requirements.txt'))
+
     async with aioopen(requirements_file_path, mode='w') as requirements_file:
-        await requirements_file.write('\n'.join(workflow_file_components.get('requirements', [])))
+        await requirements_file.write('\n'.join(workflow_components.get('requirements', [])))
 
-    files = workflow_file_components.get('files', [])
-    files.append(main_file_path)
-    files.append(requirements_file_path)
-
-    return files
+    workflow_components['files'].append(requirements_file_path)
 
 
-async def _merge_elements_to_file(wf_elems: list) -> str:
-    uuid = str(uuid4())
-    base_filepath = '{}/{}'.format(BUILDER.get('DEST_PATH', '.'), uuid)
-    files = await _create_main_file(filepath=base_filepath, wf_elems=wf_elems)
-    await _zip_files(filepath=base_filepath, files=files)
-    return uuid
+async def _zip_workflow_dir(workflow_id: str, dir_path: str) -> str:
+    zip_file_path = path.join(BUILDER.get('DEST_PATH', '.'), f'{workflow_id}.zip')
+
+    with ZipFile(zip_file_path, 'w') as zip:
+        for filename in listdir(dir_path):
+            filepath = path.join(dir_path, filename)
+            zip.write(filepath)
+
+    return zip_file_path
+
+
+async def _delete_workflow_dir(dir_path: str) -> str:
+    rmtree(dir_path, ignore_errors=True)
 
 
 async def build_workflow(selected_elements: list) -> str:
     """
     Builds a workflow (file) from selected elements
     **selected_elements**: list of selected workflow elements' names
-    :returns: url to complete workflow file
+    :returns: created workflow id
     """
     if not selected_elements:
         raise ValueError('No workflow elements selected')
 
-    return await _merge_elements_to_file(wf_elems=selected_elements)
+    workflow_id = str(uuid4())
+    workflow_dir_path = await _create_workflow_directory(id=workflow_id)
+    workflow_components = await _get_workflow_components(elements=selected_elements)
+
+    await _copy_files_to_dir(files=workflow_components.get('files', []), dir_path=workflow_dir_path)
+    await _create_main_file_in_workflow_dir(workflow_components=workflow_components, dir_path=workflow_dir_path)
+    await _create_requirements_file_in_workflow_dir(workflow_components=workflow_components, dir_path=workflow_dir_path)
+    await _zip_workflow_dir(workflow_id=workflow_id, dir_path=workflow_dir_path)
+    await _delete_workflow_dir(dir_path=workflow_dir_path)
+
+    return workflow_id

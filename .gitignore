@@ -106,6 +106,6 @@ venv.bak/
 # others
 .DS_Store
 .vscode
-logs/*
-tmp/*
-*.txt
+logs/
+tmp/
+*.zip

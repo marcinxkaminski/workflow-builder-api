@@ -15,7 +15,7 @@ DESCRIPTION = 'Validates filepaths and prints end message'
 MATERIAL_ICON = 'stop'
 REQUIREMENTS = ['termcolor==1.1.0']
 
-_MESSAGE = 'FINITO! \n Your results are in: {} \n'
+_MESSAGE = 'FINITO! \n Your results are in: {}\n'
 
 
 class End(WorkflowElement):
