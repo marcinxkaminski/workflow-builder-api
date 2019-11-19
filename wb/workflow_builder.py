@@ -34,11 +34,16 @@ async def _get_workflow_components(elements: list) -> dict:
     for element in elements:
         e = WORKFLOW_ELEMENTS.get(element.get('id'), {})
         if e and e.filename and e.classname:
-            filepath = '{}/{}'.format(BUILDER.get('PATH', '.'), e.filename)
-            files.append(filepath)
-            imports.append(await _get_import_line(filename=e.filename, classname=e.classname))
-            calls.append(await _get_main_function_call_line(classname=e.classname))
             requirements += e.requirements
+            calls.append(await _get_main_function_call_line(classname=e.classname))
+
+            filepath = '{}/{}'.format(BUILDER.get('PATH', '.'), e.filename)
+            if filepath not in files:
+                files.append(filepath)
+
+            import_line = _get_import_line(filename=e.filename, classname=e.classname)
+            if import_line not in imports:
+                imports.append(import_line)
 
     return {'files': files, 'imports': imports, 'calls': calls, 'requirements': set(requirements)}
 
