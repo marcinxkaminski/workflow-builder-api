@@ -41,7 +41,7 @@ async def _get_workflow_components(elements: list) -> dict:
             if filepath not in files:
                 files.append(filepath)
 
-            import_line = _get_import_line(filename=e.filename, classname=e.classname)
+            import_line = await _get_import_line(filename=e.filename, classname=e.classname)
             if import_line not in imports:
                 imports.append(import_line)
 
