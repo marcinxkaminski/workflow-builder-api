@@ -1,23 +1,23 @@
-dist: xenial
 language: python
 python:
   - '3.7'
   - '3.8'
-  - '3.7-dev'
   - '3.8-dev'
+  - 'nightly'
 install:
   - pip install -r requirements.txt
+  - snyk protect
+  - snyk test
 script:
   - pytest tests/
   - pylint wb/
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $github_token
-  local_dir: build
-  on:
-    branch: master
+  - snyk test
 after_success:
   - snyk monitor
 after_deploy:
   - snyk monitor
+deploy:
+  provider: heroku
+  api_key:
+    secure: 'YOUR ENCRYPTED API KEY'
+  app: my-app-123
