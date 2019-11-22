@@ -41,7 +41,8 @@ class End(WorkflowElement):
 
     def _print_message(self, message: str):
         color = 'yellow'
-        separator = colored('================================================\n', color)
+        separator = colored(
+            '================================================\n', color)
         final_message = colored(message, color)
         print(separator, final_message, separator)
 

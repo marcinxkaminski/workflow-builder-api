@@ -30,7 +30,8 @@ async def _get_workflow_components(elements: list) -> dict:
     imports = []
     calls = []
     requirements = []
-    files = [path.join(BUILDER.get('PATH', '.'), e.filename) for e in WORKFLOW_ELEMENTS.values() if e.optional is False]
+    files = [path.join(BUILDER.get('PATH', '.'), e.filename)
+             for e in WORKFLOW_ELEMENTS.values() if e.optional is False]
 
     for idx, element in enumerate(elements):
         e = WORKFLOW_ELEMENTS.get(element.get('id'), {})
@@ -62,7 +63,8 @@ async def _copy_files_to_dir(files: list, dir_path: str):
 
 
 async def _create_main_file_in_workflow_dir(workflow_components: dict, dir_path: str):
-    main_file_path = path.join(dir_path, BUILDER.get('MAIN_FILE_NAME', 'main.py'))
+    main_file_path = path.join(
+        dir_path, BUILDER.get('MAIN_FILE_NAME', 'main.py'))
 
     async with aioopen(main_file_path, mode='w') as nf:
         async with aioopen(BUILDER.get('TEMPLATE_FILE'), mode='r') as f:
@@ -78,7 +80,8 @@ async def _create_main_file_in_workflow_dir(workflow_components: dict, dir_path:
 
 
 async def _create_requirements_file_in_workflow_dir(workflow_components: dict, dir_path: str):
-    requirements_file_path = path.join(dir_path, BUILDER.get('REQUIREMENTS_FILE_NAME', 'requirements.txt'))
+    requirements_file_path = path.join(dir_path, BUILDER.get(
+        'REQUIREMENTS_FILE_NAME', 'requirements.txt'))
 
     async with aioopen(requirements_file_path, mode='w') as requirements_file:
         await requirements_file.write('\n'.join(workflow_components.get('requirements', [])))
@@ -87,7 +90,8 @@ async def _create_requirements_file_in_workflow_dir(workflow_components: dict, d
 
 
 async def _zip_workflow_dir(workflow_id: str, dir_path: str) -> str:
-    zip_file_path = path.join(BUILDER.get('DEST_PATH', '.'), f'{workflow_id}.zip')
+    zip_file_path = path.join(BUILDER.get(
+        'DEST_PATH', '.'), f'{workflow_id}.zip')
 
     with ZipFile(zip_file_path, 'w') as zip:
         for filename in listdir(dir_path):

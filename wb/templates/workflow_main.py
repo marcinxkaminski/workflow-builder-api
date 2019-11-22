@@ -56,4 +56,5 @@ if __name__ == "__main__":
         for f in listdir(args.directory):
             main(input=f, output=out, delimiter=delimiter, kwargs=kwargs)
     else:
-        main(input=args.input, output=args.output, delimiter=args.delimiter, kwargs=loads(args.kwargs))
+        main(input=args.input, output=args.output,
+             delimiter=args.delimiter, kwargs=loads(args.kwargs))

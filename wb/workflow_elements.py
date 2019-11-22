@@ -3,7 +3,8 @@ from components.End import End
 from components.Start import Start
 from components.Normalize import Normalize
 
-WORKFLOW_ELEMENTS = {e.id: e for e in (WorkflowElement(), End(), Start(), Normalize())}
+WORKFLOW_ELEMENTS = {e.id: e for e in (
+    WorkflowElement(), End(), Start(), Normalize())}
 
 
 async def get_available_workflow_elements() -> list:
