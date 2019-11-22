@@ -3,9 +3,14 @@ try:
 except ModuleNotFoundError:
     from components.WorkflowElement import WorkflowElement
 
+try:
+    from fp_helper import is_filepath_valid, is_filepath_valid_and_exists
+except ModuleNotFoundError:
+    from components.fp_helper import is_filepath_valid, is_filepath_valid_and_exists
+
 from termcolor import colored
 from shutil import copyfile
-from fp_helper import is_filepath_valid, is_filepath_valid_and_exists
+
 
 FILES = ['Start.py', 'fp_helper.py']
 CLASSNAME = 'Start'

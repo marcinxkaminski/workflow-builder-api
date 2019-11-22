@@ -41,10 +41,10 @@ class Normalize(WorkflowElement):
         with open(input) as csvfile:
             for row in csv.reader(csvfile, delimiter=delimiter):
                 for idx, col in enumerate(row):
-                    if cols[idx]:
-                        cols[idx].append(col)
+                    if cols.get(idx):
+                        cols[idx].append(int(col))
                     else:
-                        cols[idx] = col
+                        cols[idx] = [int(col)]
         return cols
 
     def _normalize_columns(self, cols: dict) -> dict:
@@ -55,15 +55,15 @@ class Normalize(WorkflowElement):
 
         return normalized_cols
 
-    def _save_cols_to_file(self, output: str, cols: dict):
-        writer = csv.writer(open(output, 'w'))
-        cols_keys = cols.keys()
-        cols_val_count = len(cols[cols_keys[0]])
+    def _save_cols_to_file(self, output: str, cols: dict, delimiter: str = ','):
+        writer = csv.writer(open(output, 'w'), delimiter=delimiter)
+        cols_keys = list(cols)
+        cols_val_count = len(cols.get(cols_keys[0]))
 
-        for idx in cols_val_count:
+        for idx in range(cols_val_count):
             row = []
             for key in cols_keys:
-                row.append(cols[key][idx])
+                row.append(cols.get(key)[idx])
             writer.writerow(row)
 
     def main(self, input=None, output=None, delimiter=',', **kwargs):
@@ -79,7 +79,8 @@ class Normalize(WorkflowElement):
                 cols=self._get_columns_from_file(
                     input=input,
                     delimiter=delimiter)
-            )
+            ),
+            delimiter=delimiter
         )
 
     def quick_main(self, data: dict) -> list:

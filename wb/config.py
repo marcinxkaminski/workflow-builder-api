@@ -8,7 +8,8 @@ LOGGER = {
 }
 
 CDN = {
-    'PATH': _TMP_PATH
+    'PATH': _TMP_PATH,
+    'WORKFLOW_FILENAME': 'workflow'
 }
 
 CLEANER = {

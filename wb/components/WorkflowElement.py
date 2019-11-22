@@ -1,14 +1,14 @@
 from abc import abstractmethod
 from uuid import uuid4
 
-FILES = ['WorkflowElement.py']
-CLASSNAME = 'WorkflowElement'
-OPTIONAL = False
-NAME = 'WORKFLOW_ELEMENT'
-DESCRIPTION = 'Empty, exemplary workflow element'
-MATERIAL_ICON = ''
-INDEPENDENT = False
-REQUIREMENTS = []
+FILES = ['WorkflowElement.py']  # the first file MUST be the workflow element's file.
+CLASSNAME = 'WorkflowElement'  # class name that will be imported and used in workflow
+OPTIONAL = False  # if the element is optional or mandatory
+NAME = 'WORKFLOW_ELEMENT'  # name displayed to the user
+DESCRIPTION = 'Empty, exemplary workflow element'  # description displayed to the user
+MATERIAL_ICON = ''  # icon displayed to the user
+INDEPENDENT = False  # if this element uses results of previous elements or not
+REQUIREMENTS = []  # if any requirements are needed, put them here
 
 
 class WorkflowElement():
@@ -31,7 +31,7 @@ class WorkflowElement():
         **materialIcon**: icon which could describe this workflow element
         **optional**: if the workflow element is optional or mandatory and should always be added
         **requirements**: requirements used in the workflow element (avoid repeating the same requirements in modules)
-        **filename**: name of the file where this element is placed
+        **filenames**: name of the file where this element is placed
         **classname**: class name of the workflow element
         :config: config**: info required by the workflow element. Could contain "data" property for the "fast" method.
         """
@@ -43,6 +43,7 @@ class WorkflowElement():
         self.requirements = requirements
         self.filenames = filenames
         self.classname = classname
+        self.independent = independent
         self.config = config
 
     @abstractmethod
