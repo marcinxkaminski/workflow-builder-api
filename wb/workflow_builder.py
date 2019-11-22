@@ -33,7 +33,8 @@ async def _get_workflow_components(elements: list) -> dict:
 
     for e in WORKFLOW_ELEMENTS.values():
         if e.optional is False:
-            files = [path.join(BUILDER.get('PATH', '.'), fn) for fn in e.filenames]
+            files = [path.join(BUILDER.get('PATH', '.'), fn)
+                     for fn in e.filenames]
 
     for idx, element in enumerate(elements):
         e = WORKFLOW_ELEMENTS.get(element.get('id'), {})

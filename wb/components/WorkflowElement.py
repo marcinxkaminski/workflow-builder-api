@@ -1,11 +1,14 @@
 from abc import abstractmethod
 from uuid import uuid4
 
-FILES = ['WorkflowElement.py']  # the first file MUST be the workflow element's file.
-CLASSNAME = 'WorkflowElement'  # class name that will be imported and used in workflow
+# the first file MUST be the workflow element's file.
+FILES = ['WorkflowElement.py']
+# class name that will be imported and used in workflow
+CLASSNAME = 'WorkflowElement'
 OPTIONAL = False  # if the element is optional or mandatory
 NAME = 'WORKFLOW_ELEMENT'  # name displayed to the user
-DESCRIPTION = 'Empty, exemplary workflow element'  # description displayed to the user
+# description displayed to the user
+DESCRIPTION = 'Empty, exemplary workflow element'
 MATERIAL_ICON = ''  # icon displayed to the user
 INDEPENDENT = False  # if this element uses results of previous elements or not
 REQUIREMENTS = []  # if any requirements are needed, put them here
