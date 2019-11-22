@@ -1,12 +1,13 @@
 from abc import abstractmethod
 from uuid import uuid4
 
-FILE = 'WorkflowElement.py'
+FILES = ['WorkflowElement.py']
 CLASSNAME = 'WorkflowElement'
 OPTIONAL = False
 NAME = 'WORKFLOW_ELEMENT'
 DESCRIPTION = 'Empty, exemplary workflow element'
 MATERIAL_ICON = ''
+INDEPENDENT = False
 REQUIREMENTS = []
 
 
@@ -18,8 +19,9 @@ class WorkflowElement():
             materialIcon=MATERIAL_ICON,
             optional=OPTIONAL,
             requirements=REQUIREMENTS,
-            filename=FILE,
+            filenames=FILES,
             classname=CLASSNAME,
+            independent=INDEPENDENT,
             config={}):
         """
         Initializes Workflow Element.
@@ -39,7 +41,7 @@ class WorkflowElement():
         self.materialIcon = materialIcon
         self.optional = optional
         self.requirements = requirements
-        self.filename = filename
+        self.filenames = filenames
         self.classname = classname
         self.config = config
 
@@ -50,6 +52,8 @@ class WorkflowElement():
         It should handle all needed operation on the input file and it's data and save it to output file.
         While there are some operations that doesn't require any input/output files you could omit them and
         save it anywhere else, but remember that other Worklow Elements will not be noticed about this file.
+        IMPORTANT: remember, that even if your element is independent, you should copy your input to output, because
+                    another element could use this results. This allows you to avaid problems with passing the data.
         **input**: path to the input file
         **output**: path to the output file
         """

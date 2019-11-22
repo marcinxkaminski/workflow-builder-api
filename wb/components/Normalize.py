@@ -5,12 +5,13 @@ except ModuleNotFoundError:
 
 import csv
 
-FILE = 'Normalize.py'
+FILES = ['Normalize.py']
 CLASSNAME = 'Normalize'
 OPTIONAL = True
 NAME = 'NORMALIZE'
 DESCRIPTION = 'Normalizes data'
 MATERIAL_ICON = 'equalizer'
+INDEPENDENT = False
 REQUIREMENTS = []
 
 
@@ -22,8 +23,9 @@ class Normalize(WorkflowElement):
             materialIcon=MATERIAL_ICON,
             optional=OPTIONAL,
             requirements=REQUIREMENTS,
-            filename=FILE,
+            filenames=FILES,
             classname=CLASSNAME,
+            independent=INDEPENDENT,
             config={
                 'data': {
                     'values': [],

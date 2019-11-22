@@ -21,8 +21,9 @@ async def _get_import_line(filename: str, classname: str):
     return f'from {module} import {classname}'
 
 
-async def _get_main_function_call_line(classname: str):
-    return f'    {classname}().main(input=input, output=output, delimiter=delimiter, **kwargs)'
+async def _get_main_function_call_line(classname: str, first: bool = False, independet: bool = True):
+    input_file = 'input' if first or not independet else 'output'
+    return f'    {classname}().main(input={input_file}, output=output, delimiter=delimiter, **kwargs)'
 
 
 async def _get_workflow_components(elements: list) -> dict:
@@ -31,19 +32,26 @@ async def _get_workflow_components(elements: list) -> dict:
     requirements = []
     files = [path.join(BUILDER.get('PATH', '.'), e.filename) for e in WORKFLOW_ELEMENTS.values() if e.optional is False]
 
-    for element in elements:
+    for idx, element in enumerate(elements):
         e = WORKFLOW_ELEMENTS.get(element.get('id'), {})
-        if e and e.filename and e.classname:
+        if e and e.filenames and e.classname:
             requirements += e.requirements
-            calls.append(await _get_main_function_call_line(classname=e.classname))
+            calls.append(
+                await _get_main_function_call_line(
+                    classname=e.classname,
+                    first=(idx == 0),
+                    independet=e.independet
+                )
+            )
 
-            filepath = '{}/{}'.format(BUILDER.get('PATH', '.'), e.filename)
-            if filepath not in files:
-                files.append(filepath)
+            for e_filename in e.filenames:
+                filepath = '{}/{}'.format(BUILDER.get('PATH', '.'), e_filename)
+                if filepath not in files:
+                    files.append(filepath)
 
-            import_line = await _get_import_line(filename=e.filename, classname=e.classname)
-            if import_line not in imports:
-                imports.append(import_line)
+                import_line = await _get_import_line(filename=e_filename, classname=e.classname)
+                if import_line not in imports:
+                    imports.append(import_line)
 
     return {'files': files, 'imports': imports, 'calls': calls, 'requirements': set(requirements)}
 

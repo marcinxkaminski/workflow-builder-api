@@ -3,16 +3,16 @@ try:
 except ModuleNotFoundError:
     from components.WorkflowElement import WorkflowElement
 
-from os.path import isfile
-from re import match
 from termcolor import colored
+from fp_helper import is_filepath_valid, is_filepath_valid_and_exists
 
-FILE = 'End.py'
+FILES = ['End.py', 'fp_helper.py']
 CLASSNAME = 'End'
 OPTIONAL = True
 NAME = 'END'
 DESCRIPTION = 'Validates filepaths and prints end message'
 MATERIAL_ICON = 'stop'
+INDEPENDENT = True
 REQUIREMENTS = ['termcolor==1.1.0']
 
 _MESSAGE = 'FINITO! \n Your results are in: {}\n'
@@ -26,20 +26,15 @@ class End(WorkflowElement):
             materialIcon=MATERIAL_ICON,
             optional=OPTIONAL,
             requirements=REQUIREMENTS,
-            filename=FILE,
+            filenames=FILES,
             classname=CLASSNAME,
+            independent=INDEPENDENT,
             config={
                 'data': {
                     'output': 'your_results_output',
                 }
             }
         )
-
-    def _is_filepath_valid(self, filepath: str) -> bool:
-        return match('^((\w:/)|//|/|./|\.\./)?(\w+/)*(\w+\.\w+)$', filepath) and filepath
-
-    def _is_filepath_valid_and_exists(self, filepath: str) -> bool:
-        return self._is_filepath_valid(filepath=filepath) and isfile(filepath)
 
     def _create_message(self, output: str) -> str:
         return _MESSAGE.format(output)
@@ -57,7 +52,7 @@ class End(WorkflowElement):
         **output**: filepath to the output
         **kwargs**: any other useful params
         """
-        if not (self._is_filepath_valid_and_exists(filepath=output)):
+        if not (is_filepath_valid_and_exists(filepath=output)):
             raise FileExistsError
 
         self._print_message(message=self._create_message(output=output))
@@ -70,7 +65,7 @@ class End(WorkflowElement):
         """
         out_fp = data.get('output', '')
 
-        if not (self._is_filepath_valid(filepath=out_fp)):
+        if not (is_filepath_valid(filepath=out_fp)):
             return 'Files paths\' must be valid'
 
         return self._create_message(output=out_fp)

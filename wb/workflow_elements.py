@@ -30,3 +30,5 @@ async def process_online(id: str, data: dict):
     if (id in WORKFLOW_ELEMENTS and
             hasattr(WORKFLOW_ELEMENTS[id], 'quick_main')):
         return WORKFLOW_ELEMENTS[id].quick_main(data=data)
+    else:
+        return 'Not Available Online'

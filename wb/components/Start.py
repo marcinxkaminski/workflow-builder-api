@@ -3,16 +3,17 @@ try:
 except ModuleNotFoundError:
     from components.WorkflowElement import WorkflowElement
 
-from os.path import isfile
-from re import match
 from termcolor import colored
+from shutil import copyfile
+from fp_helper import is_filepath_valid, is_filepath_valid_and_exists
 
-FILE = 'Start.py'
+FILES = ['Start.py', 'fp_helper.py']
 CLASSNAME = 'Start'
 OPTIONAL = True
 NAME = 'START'
 DESCRIPTION = 'Validates filepaths and prints start message'
 MATERIAL_ICON = 'play_arrow'
+INDEPENDENT = True
 REQUIREMENTS = ['termcolor==1.1.0']
 
 _MESSAGE = 'WELCOME \n STARTING RUNNING YOUR WORKFLOW \n Data Input: {} \n Results Output: {}\n'
@@ -26,8 +27,9 @@ class Start(WorkflowElement):
             materialIcon=MATERIAL_ICON,
             optional=OPTIONAL,
             requirements=REQUIREMENTS,
-            filename=FILE,
+            filenames=FILES,
             classname=CLASSNAME,
+            independent=INDEPENDENT,
             config={
                 'data': {
                     'input': 'your_data_input',
@@ -35,12 +37,6 @@ class Start(WorkflowElement):
                 }
             }
         )
-
-    def _is_filepath_valid(self, filepath: str) -> bool:
-        return match('^((\w:/)|//|/|./|\.\./)?(\w+/)*(\w+\.\w+)$', filepath) and filepath
-
-    def _is_filepath_valid_and_exists(self, filepath: str) -> bool:
-        return self._is_filepath_valid(filepath=filepath) and isfile(filepath)
 
     def _create_message(self, input: str, output: str) -> str:
         return _MESSAGE.format(input, output)
@@ -53,13 +49,17 @@ class Start(WorkflowElement):
 
     def main(self, input=None, output=None, delimiter=',', **kwargs):
         """
-        Validates filepaths and prints start message.
+        Validates filepaths, copies input to output file and prints start message.
         **input**: filepath to the input
         **output**: filepath to the output
         **kwargs**: any other useful params
         """
-        if not (self._is_filepath_valid_and_exists(filepath=input) and
-                self._is_filepath_valid_and_exists(filepath=output)):
+        if not is_filepath_valid_and_exists(filepath=input):
+            raise FileExistsError
+
+        copyfile(input, output)
+
+        if not is_filepath_valid_and_exists(filepath=output):
             raise FileExistsError
 
         self._print_message(
@@ -78,8 +78,8 @@ class Start(WorkflowElement):
         in_fp = data.get('input', '')
         out_fp = data.get('output', '')
 
-        if not (self._is_filepath_valid(filepath=in_fp) and
-                self._is_filepath_valid(filepath=out_fp)):
+        if not (is_filepath_valid(filepath=in_fp) and
+                is_filepath_valid(filepath=out_fp)):
             return 'Files paths\' must be valid'
 
         return self._create_message(input=in_fp, output=out_fp)
