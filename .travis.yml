@@ -6,7 +6,6 @@ python:
   - 'nightly'
 install:
   - pip install -r requirements.txt
-  - snyk test
 script:
   - pytest tests/
   - pylint wb/
@@ -17,6 +16,6 @@ after_deploy:
   - snyk monitor
 deploy:
   provider: heroku
+  app: workflow-builder-api
   api_key:
-    secure: 'YOUR ENCRYPTED API KEY'
-  app: my-app-123
+    secure: '$HEROKU_TOKEN'
