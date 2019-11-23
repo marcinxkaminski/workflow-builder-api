@@ -38,8 +38,8 @@ API = {
         'ELEMENTS': '/elements',
         'CDN': '/files'
     },
-    'ORIGINS': ['*'],
-    'METHODS': ['*'],
+    'ORIGINS': ['https://workflowbuilder.netlify.com'],
+    'METHODS': ['GET', 'PUT', 'POST'],
     'HEADERS': ['*'],
     'ALLOW_CREDENTIALS': False
 }
