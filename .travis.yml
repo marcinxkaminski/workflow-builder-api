@@ -1,7 +1,7 @@
 language: python
 python:
   - '3.8'
-  - '3.8-dev'
+cache: pip
 install:
   - npm i -g snyk
   - pip install coverage
