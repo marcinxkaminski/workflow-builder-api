@@ -10,13 +10,13 @@ install:
 script:
   - snyk auth $SNYK_TOKEN
   - snyk test
-  - coverage report
-  - pytest tests/
-  - pylint wb/
+  # - coverage report
+  # - pytest tests/
+  # - pylint wb/
 after_success:
   - snyk monitor
-  - codecov
-  - codeclimate-test-reporter
+  # - codecov
+  # - codeclimate-test-reporter
 deploy:
   provider: heroku
   app: workflow-builder-api
