@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.com/xkamson/ml-web.svg?token=TWgUpUSCCjzdhcZucEuD&branch=master)](https://travis-ci.com/xkamson/ml-web) [![Known Vulnerabilities](https://snyk.io/package/npm/snyk/badge.svg)](https://snyk.io/package/npm/snyk)
 
 ### Prerequisites
- - Python 3.7
+ - Python 3.8
 
 ### Installing
 
@@ -15,9 +15,12 @@
 
 * Compiles for development
     ```
-    python app.py
+    uvicorn server --reload --log-level debug --log-config logs/uvicorn.txt
     ```
-    
+
+### API Documentation
+Available at:
+or if you're running development: http://localhost:8000/docs
 
 ### Styles
 * [Commits Style](https://gitmoji.carloscuesta.me/)

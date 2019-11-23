@@ -102,3 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# others
+.DS_Store
+.vscode
+logs/
+tmp/
+*.zip
