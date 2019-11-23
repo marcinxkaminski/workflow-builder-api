@@ -5,12 +5,12 @@ except ModuleNotFoundError:
 
 import csv
 
-FILES = ['Normalize.py']
-CLASSNAME = 'Normalize'
+FILES = ["Normalize.py"]
+CLASSNAME = "Normalize"
 OPTIONAL = True
-NAME = 'NORMALIZE'
-DESCRIPTION = 'Normalizes data'
-MATERIAL_ICON = 'equalizer'
+NAME = "NORMALIZE"
+DESCRIPTION = "Normalizes data"
+MATERIAL_ICON = "equalizer"
 INDEPENDENT = False
 REQUIREMENTS = []
 
@@ -26,15 +26,11 @@ class Normalize(WorkflowElement):
             filenames=FILES,
             classname=CLASSNAME,
             independent=INDEPENDENT,
-            config={
-                'data': {
-                    'values': [],
-                }
-            }
+            config={"data": {"values": [],}},
         )
 
     def _normalize(self, arr: list) -> list:
-        return [(float(i)-min(arr))/(max(arr)-min(arr)) for i in arr]
+        return [(float(i) - min(arr)) / (max(arr) - min(arr)) for i in arr]
 
     def _get_columns_from_file(self, input: str, delimiter: str) -> list:
         cols = {}
@@ -55,8 +51,8 @@ class Normalize(WorkflowElement):
 
         return normalized_cols
 
-    def _save_cols_to_file(self, output: str, cols: dict, delimiter: str = ','):
-        writer = csv.writer(open(output, 'w'), delimiter=delimiter)
+    def _save_cols_to_file(self, output: str, cols: dict, delimiter: str = ","):
+        writer = csv.writer(open(output, "w"), delimiter=delimiter)
         cols_keys = list(cols)
         cols_val_count = len(cols.get(cols_keys[0]))
 
@@ -66,7 +62,7 @@ class Normalize(WorkflowElement):
                 row.append(cols.get(key)[idx])
             writer.writerow(row)
 
-    def main(self, input=None, output=None, delimiter=',', **kwargs):
+    def main(self, input=None, output=None, delimiter=",", **kwargs):
         """
         Normalizes data from input file and saves it to output file
         **input**: filepath to the input
@@ -76,11 +72,9 @@ class Normalize(WorkflowElement):
         self._save_cols_to_file(
             output=output,
             cols=self._normalize_columns(
-                cols=self._get_columns_from_file(
-                    input=input,
-                    delimiter=delimiter)
+                cols=self._get_columns_from_file(input=input, delimiter=delimiter)
             ),
-            delimiter=delimiter
+            delimiter=delimiter,
         )
 
     def quick_main(self, data: dict) -> list:
@@ -89,6 +83,6 @@ class Normalize(WorkflowElement):
         **data**: data for fast processing, defined in the config of the workflow element
         **returns**: dict with result in it
         """
-        arr = data.get('values', '')
+        arr = data.get("values", "")
 
         return self._normalize(arr)

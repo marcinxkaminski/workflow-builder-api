@@ -2,30 +2,31 @@ from abc import abstractmethod
 from uuid import uuid4
 
 # the first file MUST be the workflow element's file.
-FILES = ['WorkflowElement.py']
+FILES = ["WorkflowElement.py"]
 # class name that will be imported and used in workflow
-CLASSNAME = 'WorkflowElement'
+CLASSNAME = "WorkflowElement"
 OPTIONAL = False  # if the element is optional or mandatory
-NAME = 'WORKFLOW_ELEMENT'  # name displayed to the user
+NAME = "WORKFLOW_ELEMENT"  # name displayed to the user
 # description displayed to the user
-DESCRIPTION = 'Empty, exemplary workflow element'
-MATERIAL_ICON = ''  # icon displayed to the user
+DESCRIPTION = "Empty, exemplary workflow element"
+MATERIAL_ICON = ""  # icon displayed to the user
 INDEPENDENT = False  # if this element uses results of previous elements or not
 REQUIREMENTS = []  # if any requirements are needed, put them here
 
 
-class WorkflowElement():
+class WorkflowElement:
     def __init__(
-            self,
-            name=NAME,
-            description=DESCRIPTION,
-            materialIcon=MATERIAL_ICON,
-            optional=OPTIONAL,
-            requirements=REQUIREMENTS,
-            filenames=FILES,
-            classname=CLASSNAME,
-            independent=INDEPENDENT,
-            config={}):
+        self,
+        name=NAME,
+        description=DESCRIPTION,
+        materialIcon=MATERIAL_ICON,
+        optional=OPTIONAL,
+        requirements=REQUIREMENTS,
+        filenames=FILES,
+        classname=CLASSNAME,
+        independent=INDEPENDENT,
+        config={},
+    ):
         """
         Initializes Workflow Element.
         It assings id to the element and allows to set it's name, description, icon, config etc.
@@ -50,7 +51,7 @@ class WorkflowElement():
         self.config = config
 
     @abstractmethod
-    def main(self, input: str = None, output: str = None, delimiter=',', **kwargs):
+    def main(self, input: str = None, output: str = None, delimiter=",", **kwargs):
         """
         Main method for this Workflow Element.
         It should handle all needed operation on the input file and it's data and save it to output file.

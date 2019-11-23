@@ -5,14 +5,14 @@ from os import path
 
 HANDLERS = [StreamHandler()]
 
-if (LOGGER.get('SAVE_TO_FILE', False)):
-    filename = f'{date.today()}.log'
-    HANDLERS.append(FileHandler(path.join(LOGGER.get('PATH', '.'), filename)))
+if LOGGER.get("SAVE_TO_FILE", False):
+    filename = f"{date.today()}.log"
+    HANDLERS.append(FileHandler(path.join(LOGGER.get("PATH", "."), filename)))
 
 basicConfig(
     level=INFO,
-    format='%(asctime)s | %(levelname)s | %(name)s | %(message)s',
-    handlers=HANDLERS
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+    handlers=HANDLERS,
 )
 
 

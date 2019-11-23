@@ -7,7 +7,7 @@ import zipfile as zf
 
 
 def get_file_creation_date(filepath: str) -> str:
-    if system() == 'Windows':
+    if system() == "Windows":
         return path.getctime(filepath)
     else:
         meta = stat(filepath)
@@ -39,6 +39,5 @@ def del_old_files_in_dir(path: str, age: int = 0):
     Thread(target=_del_old_files_in_dir, args=[path, age]).start()
 
 
-def del_old_files_in_dir_periodic(
-        interval: int, path: str, age: int = 0):
+def del_old_files_in_dir_periodic(interval: int, path: str, age: int = 0):
     Timer(interval, partial(del_old_files_in_dir, age, path)).start()

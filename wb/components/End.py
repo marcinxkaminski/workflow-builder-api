@@ -10,16 +10,16 @@ except ModuleNotFoundError:
 
 from termcolor import colored
 
-FILES = ['End.py', 'fp_helper.py']
-CLASSNAME = 'End'
+FILES = ["End.py", "fp_helper.py"]
+CLASSNAME = "End"
 OPTIONAL = True
-NAME = 'END'
-DESCRIPTION = 'Validates filepaths and prints end message'
-MATERIAL_ICON = 'stop'
+NAME = "END"
+DESCRIPTION = "Validates filepaths and prints end message"
+MATERIAL_ICON = "stop"
 INDEPENDENT = True
-REQUIREMENTS = ['termcolor==1.1.0']
+REQUIREMENTS = ["termcolor==1.1.0"]
 
-_MESSAGE = 'FINITO! \n Your results are in: {}\n'
+_MESSAGE = "FINITO! \n Your results are in: {}\n"
 
 
 class End(WorkflowElement):
@@ -33,24 +33,19 @@ class End(WorkflowElement):
             filenames=FILES,
             classname=CLASSNAME,
             independent=INDEPENDENT,
-            config={
-                'data': {
-                    'output': 'your_results_output',
-                }
-            }
+            config={"data": {"output": "your_results_output",}},
         )
 
     def _create_message(self, output: str) -> str:
         return _MESSAGE.format(output)
 
     def _print_message(self, message: str):
-        color = 'yellow'
-        separator = colored(
-            '================================================\n', color)
+        color = "yellow"
+        separator = colored("================================================\n", color)
         final_message = colored(message, color)
         print(separator, final_message, separator)
 
-    def main(self, input=None, output=None, delimiter=',', **kwargs):
+    def main(self, input=None, output=None, delimiter=",", **kwargs):
         """
         Validates output filepath and prints end message.
         **input**: filepath to the input (unuseful here)
@@ -68,9 +63,9 @@ class End(WorkflowElement):
         **data**: data for fast processing, defined in the config of the workflow element
         **returns**: dict with result in it
         """
-        out_fp = data.get('output', '')
+        out_fp = data.get("output", "")
 
         if not (is_filepath_valid(filepath=out_fp)):
-            return 'Files paths\' must be valid'
+            return "Files paths' must be valid"
 
         return self._create_message(output=out_fp)

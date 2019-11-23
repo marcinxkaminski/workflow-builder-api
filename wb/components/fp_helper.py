@@ -3,7 +3,7 @@ from re import match
 
 
 def is_filepath_valid(filepath: str) -> bool:
-    return match('^((\w:/)|//|/|./|\.\./)?(\w+/)*(\w+\.\w+)$', filepath) and filepath
+    return match("^((\w:/)|//|/|./|\.\./)?(\w+/)*(\w+\.\w+)$", filepath) and filepath
 
 
 def is_filepath_valid_and_exists(filepath: str) -> bool:
