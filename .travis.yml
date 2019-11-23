@@ -1,19 +1,25 @@
 language: python
+os: osx
 python:
   - '3.7'
   - '3.8'
   - '3.8-dev'
   - 'nightly'
 install:
+  - npm i -g snyk
+  - pip install coverage
+  - pip install codecov
   - pip install -r requirements.txt
 script:
+  - snyk auth $SNYK_TOKEN
+  - snyk test
+  - coverage report
   - pytest tests/
   - pylint wb/
-  - snyk test
 after_success:
   - snyk monitor
-after_deploy:
-  - snyk monitor
+  - codecov
+  - codeclimate-test-reporter
 deploy:
   provider: heroku
   app: workflow-builder-api
