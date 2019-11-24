@@ -1,9 +1,9 @@
 from uvicorn import run as run_app
-from utils.cleaner import del_old_files_in_dir_periodic as run_cleaner
-from utils.logger import get_logger
-from config import CLEANER, API
-from api import router as api
-from cdn import router as cdn
+from wb.utils.cleaner import del_old_files_in_dir_periodic as run_cleaner
+from wb.utils.logger import get_logger
+from wb.config import CLEANER, API
+from wb.api import router as api
+from wb.cdn import router as cdn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 

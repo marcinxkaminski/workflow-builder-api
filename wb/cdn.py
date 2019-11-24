@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from config import CDN
+from wb.config import CDN
 from starlette.responses import FileResponse
 from os import path
 

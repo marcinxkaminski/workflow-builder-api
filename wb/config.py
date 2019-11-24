@@ -1,17 +1,22 @@
 from os import environ
 
+_MODULE_PATH = "./wb"
 _TMP_PATH = "tmp"
 
-LOGGER = {"SAVE_TO_FILE": True, "PATH": "./logs"}
+LOGGER = {"SAVE_TO_FILE": True, "PATH": f"{_MODULE_PATH}/logs"}
 
-CDN = {"PATH": _TMP_PATH, "WORKFLOW_FILENAME": "workflow"}
+CDN = {"PATH": f"{_MODULE_PATH}/{_TMP_PATH}", "WORKFLOW_FILENAME": "workflow"}
 
-CLEANER = {"AGE": 600, "INTERVAL": 300, "PATH": _TMP_PATH}  # seconds  # seconds
+CLEANER = {
+    "AGE": 600,
+    "INTERVAL": 300,
+    "PATH": f"{_MODULE_PATH}/{_TMP_PATH}",
+}  # seconds  # seconds
 
 BUILDER = {
-    "PATH": "components",
-    "DEST_PATH": _TMP_PATH,
-    "TEMPLATE_FILE": "templates/workflow_main.py",
+    "PATH": f"{_MODULE_PATH}/components",
+    "DEST_PATH": f"{_MODULE_PATH}/{_TMP_PATH}",
+    "TEMPLATE_FILE": f"{_MODULE_PATH}/templates/workflow_main.py",
     "IMPORTS_COMMENT": "IMPORTS",
     "MAIN_COMMENT": "MAIN",
     "MAIN_FILE_NAME": "main.py",
@@ -19,7 +24,7 @@ BUILDER = {
 }
 
 API = {
-    "HOST": environ.get("HOST", "0.0.0.0"),
+    "HOST": environ.get("HOST"),
     "PORT": environ.get("PORT", "8000"),
     "TITLE": "Workflow Builder",
     "DESCRIPTION": "This app is Workflow Builder. It allows you to create any workflow by selecting the blocks in specified order, then you will get url to complete workflow file you could execute.",

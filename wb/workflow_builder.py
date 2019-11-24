@@ -1,5 +1,5 @@
-from workflow_elements import WORKFLOW_ELEMENTS
-from config import BUILDER
+from wb.workflow_elements import WORKFLOW_ELEMENTS
+from wb.config import BUILDER
 from zipfile import ZipFile
 from uuid import uuid4
 from aiofiles import open as aioopen

@@ -3,7 +3,6 @@ from functools import partial
 from os import remove, path, stat, walk
 from platform import system
 from time import time
-import zipfile as zf
 
 
 def get_file_creation_date(filepath: str) -> str:

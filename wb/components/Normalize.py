@@ -1,7 +1,7 @@
 try:
     from WorkflowElement import WorkflowElement
 except ModuleNotFoundError:
-    from components.WorkflowElement import WorkflowElement
+    from wb.components.WorkflowElement import WorkflowElement
 
 import csv
 

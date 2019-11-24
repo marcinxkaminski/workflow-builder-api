@@ -1,7 +1,7 @@
-from components.WorkflowElement import WorkflowElement
-from components.End import End
-from components.Start import Start
-from components.Normalize import Normalize
+from wb.components.WorkflowElement import WorkflowElement
+from wb.components.End import End
+from wb.components.Start import Start
+from wb.components.Normalize import Normalize
 
 WORKFLOW_ELEMENTS = {e.id: e for e in (WorkflowElement(), End(), Start(), Normalize())}
 

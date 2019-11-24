@@ -1,12 +1,12 @@
 try:
     from WorkflowElement import WorkflowElement
 except ModuleNotFoundError:
-    from components.WorkflowElement import WorkflowElement
+    from wb.components.WorkflowElement import WorkflowElement
 
 try:
-    from fp_helper import is_filepath_valid, is_filepath_valid_and_exists
+    import fp_helper as fp_helper
 except ModuleNotFoundError:
-    from components.fp_helper import is_filepath_valid, is_filepath_valid_and_exists
+    import wb.components.fp_helper as fp_helper
 
 from termcolor import colored
 
@@ -52,7 +52,7 @@ class End(WorkflowElement):
         **output**: filepath to the output
         **kwargs**: any other useful params
         """
-        if not (is_filepath_valid_and_exists(filepath=output)):
+        if not (fp_helper.is_filepath_valid_and_exists(filepath=output)):
             raise FileExistsError
 
         self._print_message(message=self._create_message(output=output))
@@ -65,7 +65,7 @@ class End(WorkflowElement):
         """
         out_fp = data.get("output", "")
 
-        if not (is_filepath_valid(filepath=out_fp)):
+        if not (fp_helper.is_filepath_valid(filepath=out_fp)):
             return "Files paths' must be valid"
 
         return self._create_message(output=out_fp)
