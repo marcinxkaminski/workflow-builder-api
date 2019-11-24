@@ -3,7 +3,7 @@ from os import environ
 _MODULE_PATH = "./wb"
 _TMP_PATH = "tmp"
 
-LOGGER = {"SAVE_TO_FILE": True, "PATH": f"{_MODULE_PATH}/logs"}
+LOGGER = {"SAVE_TO_FILE": False, "PATH": f"{_MODULE_PATH}/logs"}
 
 CDN = {"PATH": f"{_MODULE_PATH}/{_TMP_PATH}", "WORKFLOW_FILENAME": "workflow"}
 
