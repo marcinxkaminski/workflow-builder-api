@@ -3,7 +3,7 @@ from wb.config import BUILDER
 from zipfile import ZipFile
 from uuid import uuid4
 from aiofiles import open as aioopen
-from os import mkdir, path, listdir
+from os import makedirs, path, listdir
 from shutil import copy2, rmtree
 
 
@@ -11,7 +11,9 @@ async def _create_workflow_directory(id: str) -> str:
     workflow_dir_path = path.join(BUILDER.get("DEST_PATH", "."), id)
 
     if not path.exists(workflow_dir_path):
-        mkdir(workflow_dir_path)
+        makedirs(workflow_dir_path, exist_ok=True)
+
+    print("\n\n PATH_EXISTS: ", path.exists(workflow_dir_path), workflow_dir_path)
 
     return workflow_dir_path
 
