@@ -26,10 +26,6 @@ app.add_middleware(
     allow_credentials=API.get("ALLOW_CREDENTIALS", False),
 )
 
-import os
-
-print("XWD -> ", os.getcwd())
-
 if __name__ == "__main__":
     run_app(app, host=API.get("HOST"), port=API.get("PORT"))
     run_cleaner(

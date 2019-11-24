@@ -30,7 +30,7 @@ API = {
     "DESCRIPTION": "This app is Workflow Builder. It allows you to create any workflow by selecting the blocks in specified order, then you will get url to complete workflow file you could execute.",
     "BASE_PATH": "/api/workflow-builder{}",
     "ENDPOINTS": {"ELEMENTS": "/elements", "CDN": "/files"},
-    "ORIGINS": ["https://workflowbuilder.netlify.com"],
+    "ORIGINS": ["https://marcinxkaminski.github.io"],
     "METHODS": ["GET", "PUT", "POST"],
     "HEADERS": ["*"],
     "ALLOW_CREDENTIALS": False,
