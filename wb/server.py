@@ -27,6 +27,9 @@ app.add_middleware(
 )
 
 if __name__ == "__main__":
+    import os
+
+    print(os.getcwd())
     run_app(app, host=API.get("HOST"), port=API.get("PORT"))
     run_cleaner(
         interval=CLEANER.get("INTERVAL"),
