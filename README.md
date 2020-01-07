@@ -1,5 +1,5 @@
 ## Demo
- https://xkamson.github.io/workflow-builder-web/
+https://marcinxkaminski.github.io/workflow-builder-web/
  -----------------------------------------------
 
 # Engineer's Thesis -- Marcin Kamiński
@@ -30,6 +30,5 @@ Web app for managing the machine learning process for Engineer's Thesis on AGH (
 Available at: http://workflow-builder-api.herokuapp.com/docs
 or if you're running dev (on localhost): http://localhost:8000/docs
 
-
-### Authors
-  * [Marcin Kamiński](https://github.com/xkamson)
+### Web
+https://github.com/marcinxkaminski/workflow-builder-web
