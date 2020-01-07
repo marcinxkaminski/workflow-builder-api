@@ -1,5 +1,9 @@
-# Marcin Kamiński - Engineer's Thesis
-## Development of an web application to manage the machine learning process for Engineer's Thesis on AGH (University of Science and Technology) in Cracow.
+## Demo
+ https://xkamson.github.io/workflow-builder-web/
+ -----------------------------------------------
+
+# Engineer's Thesis -- Marcin Kamiński
+Web app for managing the machine learning process for Engineer's Thesis on AGH (University of Science and Technology) in Cracow.
 
 [![Build Status](https://travis-ci.com/marcinxkaminski/workflow-builder-api.svg?branch=master)](https://travis-ci.com/marcinxkaminski/workflow-builder-api)
 [![Known Vulnerabilities](https://snyk.io/test/github/marcinxkaminski/workflow-builder-api/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/marcinxkaminski/workflow-builder-api?targetFile=requirements.txt)
@@ -10,28 +14,22 @@
 ### Prerequisites
  - Python 3.8
 
-### Installing
+### Development
 
-* Project setup
+* Install
     ```
     pip install -r requirements.txt
     ```
 
-* Compiles for development
+* Run
     ```
     uvicorn server:app --reload --log-level debug --log-config logs/uvicorn.txt
     ```
 
 ### API Documentation
-Available at:
-or if you're running development: http://localhost:8000/docs
-
-### Styles
-* [Commits Style](https://gitmoji.carloscuesta.me/)
+Available at: http://workflow-builder-api.herokuapp.com/docs
+or if you're running dev (on localhost): http://localhost:8000/docs
 
 
 ### Authors
   * [Marcin Kamiński](https://github.com/xkamson)
-
-### Contribution
-Feel free to contribute. Please follow the styles above while creating pull requests.
